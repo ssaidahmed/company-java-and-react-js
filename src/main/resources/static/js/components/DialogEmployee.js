@@ -26,6 +26,7 @@ function DialogEmployee() {
         dispatch(departmentFetchData('http://localhost:8080/api/department'));
         dispatch(professionFetchData('http://localhost:8080/api/profession'));
     }, []);
+
     const dataForSelect = (mass) =>{
         let array = [];
         mass.map((item, index) =>{

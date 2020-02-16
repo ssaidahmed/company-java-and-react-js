@@ -27,21 +27,14 @@ class Table extends React.Component {
     handleSubmit(e){
         e.preventDefault();
         let data = this.state.inputs;
-
+        this.props.onUpdateRow(data);
+        this.setShow(false);
     }
 
     setShow(boll){
         this.setState({
             show:boll
         })
-    }
-
-    deleteRow(e){
-        e.preventDefault();
-        let id = e.target.getAttribute('data-id');
-        this.props.onDeleteRow(id);
-
-
     }
 
     dataForSelect(mass){
@@ -56,15 +49,29 @@ class Table extends React.Component {
     };
 
     handleInputChange(e){
-        this.setState({...this.state.inputs, [e.target.name]: e.target.value})
+
+        this.setState({inputs:{...this.state.inputs, [e.target.name]: e.target.value}})
     }
-    updateRow(e){
+
+    deleteRow(e, id){
         e.preventDefault();
-        let id = e.target.getAttribute('data-index');
+        this.props.onDeleteRow(id);
+    }
+    updateRow(e, id){
+        e.preventDefault();
+
         let entity = this.props.data[id];
+        this.setState({inputs:{
+            ...this.state.inputs,
+                id: entity.id,
+                name: entity.name,
+                description: entity.description,
+
+        }});
+
 
         this.setShow(true);
-        this.props.onUpdateRow(id);
+
     }
 
     genericHeadRowTable(column){
@@ -76,29 +83,30 @@ class Table extends React.Component {
             );
         });
     }
+
     genericFormForModal(mass){
-        mass.map((item, index) =>{
+        return mass.map((item, index) =>{
             let label = Object.values(item)[0];
             let name = Object.values(item)[1];
             let type = Object.values(item)[2];
 
             if(type === 'input'){
                 if(name === 'id'){
-                    return <input type="hidden" name="id" onChange = {this.handleInputChange} value = {this.state.inputs[id] || ''}/>
+                    return <input key={index} type="hidden" name="id" onChange = {this.handleInputChange} value = {this.state.inputs[name] || ''}/>
                 }
                 return(
-                    <div className="form-group">
+                    <div key={index} className="form-group">
                         <label htmlFor={name}>{label}</label>
-                        <input type="text" className="form-control" name={name} onChange = {this.handleInputChange} value = {this.state.inputs[name] || ''}
-                               placeholder="Ф.И.О"/>
+                        <input key={index} type="text" className="form-control" name={name} onChange = {this.handleInputChange} value = {this.state.inputs[name] || ''}
+                               placeholder={name}/>
                     </div>
                 );
             }else {
                 if(name === 'departmentId') {
                     return (
-                        <div className="form-group">
+                        <div key={index} className="form-group">
                             <label htmlFor={name}>{label}</label>
-                            <select className="form-control" id={name} onChange={this.handleInputChange}
+                            <select key={index} className="form-control" id={name} onChange={this.handleInputChange}
                                     value={this.state.inputs[name] || ''} name={name}>
                                 {this.dataForSelect(this.props.departments)}
                             </select>
@@ -106,9 +114,9 @@ class Table extends React.Component {
                     );
                 }else {
                     return (
-                        <div className="form-group">
+                        <div key={index} className="form-group">
                             <label htmlFor={name}>{label}</label>
-                            <select className="form-control" id={name} onChange={this.handleInputChange}
+                            <select key={index} className="form-control" id={name} onChange={this.handleInputChange}
                                     value={this.state.inputs[name] || ''} name={name}>
                                 {this.dataForSelect(this.props.professions)}
                             </select>
@@ -121,22 +129,22 @@ class Table extends React.Component {
     genericRowForTable(data ){
 
         return data.map((item, index) =>{
-            let id;
+            let id=0;
 
             let mass = Object.values(item).filter((i)=> {return typeof i !== 'boolean'}).map((item, i) =>{
                 if(typeof item === 'number'){
                     id = item;
                 }
 
-                if(item.name !== undefined ){
+                if(item !== null && item.name !== undefined ){
                     return (<td key={i}>{item.name}</td>);
                 }
 
                 return (<td key={i}>{item}</td>);
             });
 
-            mass.push(<td key={mass.length}><button onClick={this.updateRow} data-id={id} data-index={index} type="button" className="btn btn-primary">Edit</button></td>,
-                <td key={mass.length+1}><button onClick={this.deleteRow} data-id={id} data-index={index} type="button" className="btn btn-danger">Delete</button></td>);
+            mass.push(<td key={mass.length}><button onClick={(e)=> this.updateRow(e, index)} type="button" className="btn btn-primary">Edit</button></td>,
+                <td key={mass.length+1}><button onClick={(e)=> this.deleteRow(e, id)} type="button" className="btn btn-danger">Delete</button></td>);
 
             return (
                 <tr key={index}>
@@ -147,24 +155,18 @@ class Table extends React.Component {
 
 
     }
-    componentDidMount() {
 
-        this.setState({
-            data:this.props.data
-        });
-    }
     render() {
         const {column, data, modalForm} = this.props;
-        console.log(data);
         const columnRes = this.genericHeadRowTable(column);
 
         const dataResult = this.genericRowForTable(data);
 
         return(
-            <div className='container'>
-                <Modal show={this.show} onHide={()=>this.setShow(false)}>
+            <div>
+                <Modal show={this.state.show} onHide={()=>this.setShow(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add employee</Modal.Title>
+                        <Modal.Title>Edit employee</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
@@ -176,7 +178,7 @@ class Table extends React.Component {
                             Close
                         </Button>
                         <Button variant="primary" onClick={this.handleSubmit}>
-
+                            Save
                         </Button>
                     </Modal.Footer>
                 </Modal>

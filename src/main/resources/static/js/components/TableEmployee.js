@@ -20,7 +20,7 @@ const forGenericModal =[
     {
         label:'Описание',
         name:'description',
-        type:'select'
+        type:'input'
     },
     {
         label:'Выерите отдел',
@@ -43,10 +43,10 @@ class TableEmployee extends React.Component{
         this.handleUpdateRow = this.handleUpdateRow.bind(this);
     }
     handleDeleteRow(id) {
-        this.props.deleteEmployee('http://localhost:8080/api/employee', id)
+        this.props.deleteEmployee('http://localhost:8080/api/employee/'+id, id)
     }
-    handleUpdateRow(id) {
-        this.props.updateEmployee()
+    handleUpdateRow(data) {
+        this.props.updateEmployee('http://localhost:8080/api/employee', data);
     }
     componentDidMount() {
         this.props.fetchData('http://localhost:8080/api/employee')
@@ -75,7 +75,7 @@ const  mapDispatchToProps = dispatch =>{
   return {
       fetchData: url => {dispatch(employeeFetchData(url))},
       deleteEmployee: (url, id) =>{dispatch(deleteEmployee(url, id))},
-      updateEmployee: (url, id) =>{dispatch(updateEmployee(url, id))},
+      updateEmployee: (url, data) =>{dispatch(updateEmployee(url, data))},
       getEmployee: (url) =>{dispatch(getEmployee(url))}
   };
 };

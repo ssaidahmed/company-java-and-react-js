@@ -4,7 +4,7 @@ import {GET_EMPLOYEE, SAVE_EMPLOYEE, DELETE_EMPLOYEE, UPDATE_EMPLOYEE, EMPLOYEE_
 
 
 export function employeeFetchDataSuccess(data) {
-    console.log(data);
+
     return{
         type:EMPLOYEE_DATA_SUCCESS,
         payload: data
@@ -70,7 +70,14 @@ export function saveEmployee(url, data) {
 }
 export function updateEmployee(url, data) {
     return (dispatch) => {
-        fetch(url)
+        fetch(url,{
+            method:'put',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(data)
+        })
             .then(response =>{
                 if(!response.ok){
                     throw new  Error (response.statusText)

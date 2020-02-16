@@ -44,7 +44,7 @@ function DialogEmployee() {
         setInputs (inputs => ({...inputs, [event.target.name]: event.target.value}));
     };
 
-    console.log(inputs);
+
     return (
         <>
             <Button variant="primary" onClick={()=>setShow(true)}>
@@ -90,7 +90,7 @@ function DialogEmployee() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSubmit}>
-
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>

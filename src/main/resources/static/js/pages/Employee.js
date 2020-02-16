@@ -6,7 +6,7 @@ function Employee(props) {
 
 
     return(
-        <div className='container pt-4'>
+        <div>
             <h1>Employee</h1>
             <hr/>
 

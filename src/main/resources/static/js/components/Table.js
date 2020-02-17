@@ -19,6 +19,8 @@ class Table extends React.Component {
         this.dataForSelect = this.dataForSelect.bind(this);
         this.setShow = this.setShow.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.genericHeadRowTable = this.genericHeadRowTable.bind(this);
+
 
 
 
@@ -27,6 +29,7 @@ class Table extends React.Component {
     handleSubmit(e){
         e.preventDefault();
         let data = this.state.inputs;
+        console.log(data);
         this.props.onUpdateRow(data);
         this.setShow(false);
     }
@@ -61,13 +64,19 @@ class Table extends React.Component {
         e.preventDefault();
 
         let entity = this.props.data[id];
-        this.setState({inputs:{
-            ...this.state.inputs,
-                id: entity.id,
-                name: entity.name,
-                description: entity.description,
+        let obj={};
+        Object.entries(entity).forEach(element => {
+            if(element[1].id){
+                obj[element[0]+'Id'] = element[1].id
+            }else if(element[0] !== 'new'){
+                obj[element[0]] = element[1]
+            }
 
-        }});
+
+        });
+
+
+        this.setState({inputs:{...this.state.inputs,...obj}});
 
 
         this.setShow(true);

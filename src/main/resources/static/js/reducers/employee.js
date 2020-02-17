@@ -9,9 +9,17 @@ export function employee(state=initialState, action){
         case EMPLOYEE_DATA_SUCCESS:
             return {...state, employees:action.payload};
         case DELETE_EMPLOYEE:
-            return {...state, employees:[...state.employees.filter(item => item.id !== payload)]};
+            return {...state, employees:[...state.employees.filter(item => item.id !== action.payload)]};
         case UPDATE_EMPLOYEE:
-            return {...state, employees:[...state.employees, action.payload]};
+            let objUpdate = action.payload;
+
+            return {...state, employees:[...state.employees.map((item) => {
+                if(item.id === objUpdate.id){
+                    return objUpdate;
+                }
+                return item;
+
+            } )]};
         case  SAVE_EMPLOYEE:
             return {...state, employees:[...state.employees, action.payload]};
     }

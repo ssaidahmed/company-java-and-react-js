@@ -62,6 +62,7 @@ export function saveEmployee(url, data) {
                 }
                 return response;
             })
+            .then(response => response.json())
             .then(response => dispatch({
                 type:SAVE_EMPLOYEE,
                 payload:response
@@ -84,6 +85,7 @@ export function updateEmployee(url, data) {
                 }
                 return response;
             })
+            .then(response => response.json())
             .then(response => dispatch({
                 type:UPDATE_EMPLOYEE,
                 payload:response
@@ -99,6 +101,7 @@ export function getEmployee(url) {
                 }
                 return response;
             })
+            .then(response => response.json())
             .then(response => dispatch({
                 type: GET_EMPLOYEE,
                 payload: response

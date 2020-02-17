@@ -47,7 +47,7 @@ class Table extends React.Component {
             let name = Object.values(item)[1];
             array.push(<option key={index} value={id}>{name}</option>)
         });
-
+        array.push(<option key={array.length} value={null}>{}</option>);
         return array;
     };
 
@@ -192,7 +192,7 @@ class Table extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-                <table className='table table-bordered table-primary table-hover'>
+                <table className='table table-sm  table-bordered table-primary table-hover'>
                     <thead className="thead-primary">
                     <tr>
                         {columnRes}

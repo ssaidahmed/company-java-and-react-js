@@ -12,7 +12,9 @@
 Используемые технологии
 1. Spring Boot;
 2. БД H2 embedded;
-3. React js, Redux;
+3. React js, Redux, webpack;
 4. Unit-тесты на Junit5;
 5. Использовать CSS-framework Bootstrap 4 или другой современный;
 Проект разместить на GitHub или Bitbucket.
+##### Запустить клиентскую часть
+   Командой: <code>npm run dev </code> 

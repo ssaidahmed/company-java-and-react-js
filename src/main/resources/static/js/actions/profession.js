@@ -1,5 +1,5 @@
 import {SAVE_PROFESSION, DELETE_PROFESSION, UPDATE_PROFESSION, PROFESSION_DATA_SUCCESS} from '../constants/profession';
-import {DELETE_EMPLOYEE, GET_EMPLOYEE, SAVE_EMPLOYEE, UPDATE_EMPLOYEE} from "../constants/employee";
+
 
 export function professionFetchDataSuccess(response) {
     return{
@@ -37,53 +37,54 @@ export function deleteProfession(url, id) {
                 return response;
             })
             .then(() => dispatch({
-                type:DELETE_EMPLOYEE,
+                type:DELETE_PROFESSION,
                 payload: id,
             }))
     }
 }
 export function saveProfession(url, data) {
     return (dispatch) => {
-        fetch(url)
+        fetch(url,{
+            method:'post',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body:JSON.stringify(data)
+        })
             .then(response =>{
                 if(!response.ok){
                     throw new  Error (response.statusText)
                 }
                 return response;
             })
+            .then(response => response.json())
             .then(response => dispatch({
-                type:SAVE_EMPLOYEE,
+                type:SAVE_PROFESSION,
                 payload:response
             }))
     }
 }
 export function updateProfession(url, data) {
     return (dispatch) => {
-        fetch(url)
+        fetch(url,{
+            method:'put',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(data)
+        })
             .then(response =>{
                 if(!response.ok){
                     throw new  Error (response.statusText)
                 }
                 return response;
             })
+            .then(response => response.json())
             .then(response => dispatch({
-                type:UPDATE_EMPLOYEE,
+                type:UPDATE_PROFESSION,
                 payload:response
-            }))
-    }
-}
-export function getProfession(url) {
-    return (dispatch) => {
-        fetch(url)
-            .then(response =>{
-                if(!response.ok){
-                    throw new  Error (response.statusText)
-                }
-                return response;
-            })
-            .then(response => dispatch({
-                type: GET_EMPLOYEE,
-                payload: response
             }))
     }
 }

@@ -7,14 +7,13 @@ import About from '../pages/About';
 import Home from '../pages/Home';
 import {Navbar} from './Navbar';
 import {Footer} from './Footer'
-import {Alert} from './Alert'
+
 
 function App() {
     return(
         <BrowserRouter>
             <Navbar/>
             <div className='container pt-4'>
-                <Alert/>
                 <Switch>
                     <Route path={'/'} exact component={Home}/>
                     <Route path={'/employee'} exact component={Employee}/>

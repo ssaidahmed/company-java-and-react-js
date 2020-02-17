@@ -9,7 +9,7 @@ export function profession(state=initialState, action){
         case PROFESSION_DATA_SUCCESS:
             return {...state, professions:action.payload};
         case DELETE_PROFESSION:
-            return {...state, professions: state.professions.filter(item => item.id !== payload)};
+            return {...state, professions:[...state.professions.filter(item => item.id !== action.payload)]};
         case UPDATE_PROFESSION:
             let objUpdate = action.payload;
 

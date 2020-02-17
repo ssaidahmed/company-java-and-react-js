@@ -7,7 +7,7 @@ export function department(state=initialState, action){
         case DEPARTMENT_DATA_SUCCESS:
             return {...state, departments:action.payload};
         case DELETE_DEPARTMENT:
-            return {...state, departments: state.departments.filter(item => item.id !== payload)};
+            return {...state, departments: [...state.departments.filter(item => item.id !== action.payload)]};
         case UPDATE_DEPARTMENT:
             let objUpdate = action.payload;
 

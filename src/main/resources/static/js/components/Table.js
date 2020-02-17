@@ -64,9 +64,10 @@ class Table extends React.Component {
         e.preventDefault();
 
         let entity = this.props.data[id];
+
         let obj={};
         Object.entries(entity).forEach(element => {
-            if(element[1].id){
+            if(element[1] !== null && element[1].id){
                 obj[element[0]+'Id'] = element[1].id
             }else if(element[0] !== 'new'){
                 obj[element[0]] = element[1]
@@ -111,7 +112,7 @@ class Table extends React.Component {
                     </div>
                 );
             }else {
-                if(name === 'departmentId') {
+                if(name === 'departmentId' || name === 'parentDepartmentId') {
                     return (
                         <div key={index} className="form-group">
                             <label htmlFor={name}>{label}</label>

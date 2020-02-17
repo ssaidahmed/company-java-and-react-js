@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import Table from './Table'
-import DialogEmployee from './DialogEmployee';
+
 
 import {employeeFetchData, deleteEmployee, getEmployee, saveEmployee, updateEmployee} from "../actions/employee";
 
@@ -76,7 +76,7 @@ const  mapDispatchToProps = dispatch =>{
       fetchData: url => {dispatch(employeeFetchData(url))},
       deleteEmployee: (url, id) =>{dispatch(deleteEmployee(url, id))},
       updateEmployee: (url, data) =>{dispatch(updateEmployee(url, data))},
-      getEmployee: (url) =>{dispatch(getEmployee(url))}
+
   };
 };
 

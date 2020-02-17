@@ -24,7 +24,7 @@ export function departmentFetchData(url) {
             });
     }
 }
-export function deleteDepartment(url) {
+export function deleteDepartment(url, id) {
     return (dispatch) => {
         fetch(url,{
             method: 'delete'

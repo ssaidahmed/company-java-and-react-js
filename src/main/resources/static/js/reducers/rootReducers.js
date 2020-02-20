@@ -2,11 +2,13 @@ import {combineReducers} from "redux";
 import {department} from './department'
 import {profession} from './profession'
 import {employee} from './employee'
+import {alert} from './alertReducer'
 
 const rootReducers = combineReducers({
     department,
     profession,
-    employee
+    employee,
+    alert
 
 });
 export default rootReducers;

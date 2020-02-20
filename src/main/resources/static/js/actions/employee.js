@@ -1,4 +1,5 @@
 import {GET_EMPLOYEE, SAVE_EMPLOYEE, DELETE_EMPLOYEE, UPDATE_EMPLOYEE, EMPLOYEE_DATA_SUCCESS} from '../constants/employee'
+import {SHOW_ALERT} from "../constants/alert";
 
 
 
@@ -58,6 +59,7 @@ export function saveEmployee(url, data) {
         })
             .then(response =>{
                 if(!response.ok){
+                    dispatch({type:SHOW_ALERT, payload:{variant:'danger', visible:true, text:'Произошла ошибка! Не удалось сохранить!', type:'error'}});
                     throw new  Error (response.statusText)
                 }
                 return response;

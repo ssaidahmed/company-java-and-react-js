@@ -1,46 +1,34 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 
+
 export function AlertSuccess(props) {
-    const [show, setShow] = useState(true);
+    const {alert, hide,} = props;
 
-    return (
-        <>
-            <Alert show={show} variant="success">
-                <Alert.Heading>How's it going?!</Alert.Heading>
-                <p>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-                    lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
-                    fermentum.
-                </p>
-                <hr />
-                <div className="d-flex justify-content-end">
-                    <Button onClick={() => setShow(false)} variant="outline-success">
-                        Close me ya'll!
-                    </Button>
-                </div>
-            </Alert>
-
-            {!show && <Button onClick={() => setShow(true)}>Show Alert</Button>}
-        </>
-    );
-}
-
-export function AlertDanger(props) {
-    const [show, setShow] = useState(true);
-
-    if (show) {
+    // const [show, setShow] = useState(alert.visible);
+    // if (!alert.visible) {
+    //     return null;
+    // }
         return (
-            <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                <p>
-                    Change this and that and try again. Duis mollis, est non commodo
-                    luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                    Cras mattis consectetur purus sit amet fermentum.
-                </p>
-            </Alert>
+            <>
+                <Alert show={alert.visible} variant={alert.variant}>
+                    <Alert.Heading>Внимание!</Alert.Heading>
+                    <p>
+                        {alert.text}
+                    </p>
+                    <hr/>
+                    <div className="d-flex justify-content-end">
+                        <Button onClick={hide} variant="outline-success">
+                            А теперь закрой меня
+                        </Button>
+                    </div>
+                </Alert>
+
+
+            </>
         );
-    }
-    return <Button onClick={() => setShow(true)}>Show Alert</Button>;
+
+
 }
+

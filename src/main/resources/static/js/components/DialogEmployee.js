@@ -5,23 +5,50 @@ import {departmentFetchData} from "../actions/department";
 import {professionFetchData} from "../actions/profession";
 import {saveEmployee} from "../actions/employee";
 import { useDispatch, useSelector } from "react-redux";
+import {AlertSuccess} from './Alert';
+import {HIDE_ALERT, SHOW_ALERT} from '../constants/alert';
+
 
 function DialogEmployee() {
 
     const [show, setShow] = useState(false);
 
-    const [inputs, setInputs] = useState ({});
+    const [inputs, setInputs] = useState ({
+        id:'',
+        name:'',
+        description:'',
+        departmentId:'',
+        professionId:''
+    });
     const departments = useSelector(state => state.department.departments);
+    const alert = useSelector(state => state.alert.alert);
     const professions = useSelector(state => state.profession.professions);
     const dispatch = useDispatch();
 
 
+
     const handleSubmit = (e)=>{
         e.preventDefault();
-        setShow(false);
+
         dispatch(saveEmployee('http://localhost:8080/api/employee', inputs));
+        setInputs(inputs=>({...inputs,
+            id:'',
+            name:'',
+            description:'',
+            departmentId:'',
+            professionId:''
+        }));
+
+        setShow(false);
+        showAlert('Объект успешно сохранен!', 'Success', 'success');
+    };
+    const hide =()=>{
+      dispatch({type:HIDE_ALERT})
     };
 
+    const showAlert =(text, type, variant) =>{
+      dispatch({type:SHOW_ALERT, payload:{variant:variant,visible:true, text:text, type:type}})
+    };
     useEffect(()=>{
         dispatch(departmentFetchData('http://localhost:8080/api/department'));
         dispatch(professionFetchData('http://localhost:8080/api/profession'));
@@ -34,7 +61,7 @@ function DialogEmployee() {
             let name = Object.values(item)[1];
             array.push(<option key={index} value={id}>{name}</option>)
         });
-
+        array.push(<option key={array.length} value={null}>{}</option>);
         return array;
     };
 
@@ -47,6 +74,7 @@ function DialogEmployee() {
 
     return (
         <>
+            <AlertSuccess alert ={alert} hide={hide}/>
             <Button variant="primary" onClick={()=>setShow(true)}>
                 Add employee
             </Button>

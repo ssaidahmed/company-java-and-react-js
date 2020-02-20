@@ -1,5 +1,6 @@
 
 import {SAVE_DEPARTMENT, DELETE_DEPARTMENT, UPDATE_DEPARTMENT, DEPARTMENT_DATA_SUCCESS} from '../constants/department'
+import {SHOW_ALERT} from "../constants/alert";
 
 export function departmentFetchDataSuccess(response) {
     return{
@@ -13,7 +14,8 @@ export function departmentFetchData(url) {
         fetch(url)
             .then(response =>{
                 if(!response.ok){
-                    throw new  Error (response.statusText)
+                    dispatch({type:SHOW_ALERT, payload:{variant:'danger', visible:true, text:'Произошла ошибка! Не удалось загрузить объекты', type:'error'}});
+                    throw new  Error (response.statusText);
                 }
                 return response;
             })
@@ -31,6 +33,7 @@ export function deleteDepartment(url, id) {
         })
             .then(response =>{
                 if(!response.ok){
+                    dispatch({type:SHOW_ALERT, payload:{variant:'danger', visible:true, text:'Произошла ошибка! Не удалось удалить', type:'error'}});
                     throw new  Error (response.statusText)
                 }
                 return response;
@@ -53,7 +56,8 @@ export function saveDepartment(url, data) {
         })
             .then(response =>{
                 if(!response.ok){
-                    throw new  Error (response.statusText)
+                    dispatch({type:SHOW_ALERT, payload:{variant:'danger', visible:true, text:'Произошла ошибка! Не удалось сохранить', type:'error'}});
+                    throw new  Error (response.statusText);
                 }
                 return response;
             })
@@ -78,6 +82,7 @@ export function updateDepartment(url, data) {
         })
             .then(response =>{
                 if(!response.ok){
+                    dispatch({type:SHOW_ALERT, payload:{variant:'danger', visible:true, text:'Произошла ошибка! Не удалось обновить', type:'error'}});
                     throw new  Error (response.statusText)
                 }
                 return response;
